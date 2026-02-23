@@ -2,6 +2,7 @@ package nimblix.in.HealthCareHub.controller;
 
 import nimblix.in.HealthCareHub.model.Appointment;
 import nimblix.in.HealthCareHub.service.AppointmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,13 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/patients")
+@RequiredArgsConstructor
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
-
-    public AppointmentController(AppointmentService appointmentService) {
-        this.appointmentService = appointmentService;
-    }
 
     /**
      * Fetch Patient Appointment History
@@ -26,7 +24,7 @@ public class AppointmentController {
             @PathVariable Long patientId) {
 
         List<Appointment> appointmentList =
-                appointmentService.getAppointmentHistory(patientId);
+                appointmentService.getPatientAppointmentHistory(patientId);
 
         if (appointmentList == null || appointmentList.isEmpty()) {
             return ResponseEntity.noContent().build();
