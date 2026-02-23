@@ -8,6 +8,4 @@ public interface AppointmentService {
 
     List<Appointment> getPatientAppointmentHistory(Long patientId);
 
-    List<Appointment> getAppointmentHistory(Long patientId);
 }
-

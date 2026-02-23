@@ -18,10 +18,4 @@ public class AppointmentServiceImpl implements AppointmentService {
     return appointmentRepository
             .findByPatientIdOrderByAppointmentDateTimeDesc(patientId);
   }
-
-  @Override
-  public List<Appointment> getAppointmentHistory(Long patientId) {
-    return appointmentRepository
-            .findByPatientIdOrderByAppointmentDateTimeDesc(patientId);
-  }
 }
