@@ -2,68 +2,21 @@ package nimblix.in.HealthCareHub.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
 import nimblix.in.HealthCareHub.model.Doctor;
+import nimblix.in.HealthCareHub.model.Hospital;
+import nimblix.in.HealthCareHub.model.Specialization;
 import nimblix.in.HealthCareHub.repository.DoctorRepository;
- main
-import nimblix.in.HealthCareHub.service.DoctorService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
+import nimblix.in.HealthCareHub.repository.HospitalRepository;
+import nimblix.in.HealthCareHub.repository.SpecializationRepository;
 import nimblix.in.HealthCareHub.request.DoctorRegistrationRequest;
 import nimblix.in.HealthCareHub.service.DoctorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import nimblix.in.HealthCareHub.model.Hospital;
-import nimblix.in.HealthCareHub.model.Specialization;
-import nimblix.in.HealthCareHub.repository.HospitalRepository;
-import nimblix.in.HealthCareHub.repository.SpecializationRepository;
-
- main
 
 @Service
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
- main
-
-    @Override
-    public Doctor saveDoctor(Doctor doctor) {
-        return doctorRepository.save(doctor);
-    }
-
-    @Override
-    public List<Doctor> getAllDoctors() {
-        return doctorRepository.findAll();
-    }
-
-    @Override
-    public Doctor getDoctorById(Long id) {
-        return doctorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
-    }
-
-    @Override
-    public Doctor updateDoctor(Long id, Doctor updatedDoctor) {
-
-        Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
-
-        doctor.setName(updatedDoctor.getName());
-        doctor.setSpecialization(updatedDoctor.getSpecialization());
-
-        return doctorRepository.save(doctor);
-    }
-
-    @Override
-    public void deleteDoctor(Long id) {
-
-        Doctor doctor = doctorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
-
-        doctorRepository.delete(doctor);
-
     private final HospitalRepository hospitalRepository;
     private final SpecializationRepository specializationRepository;
 
@@ -85,13 +38,10 @@ public class DoctorServiceImpl implements DoctorService {
 
         // Create Doctor
         Doctor doctor = new Doctor();
-
         doctor.setName(request.getDoctorName());
         doctor.setEmailId(request.getDoctorEmail());
         doctor.setPassword(request.getPassword());
         doctor.setPhone(request.getPhoneNo());
-
-        // ✅ CORRECT WAY (Set Objects, not IDs)
         doctor.setHospital(hospital);
         doctor.setSpecialization(specialization);
 
@@ -102,9 +52,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public ResponseEntity<?> getDoctorDetails(Long doctorId, Long hospitalId) {
-        return null;
- main
+        // TODO: implement fetch logic
+        return ResponseEntity.ok("Doctor details");
     }
-
 }
-

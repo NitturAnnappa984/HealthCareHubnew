@@ -1,31 +1,32 @@
 package nimblix.in.HealthCareHub.controller;
-main
+
 import lombok.RequiredArgsConstructor;
+import nimblix.in.HealthCareHub.service.AppointmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import nimblix.in.HealthCareHub.service.AppointmentService;
+import java.util.List;
+import nimblix.in.HealthCareHub.model.Appointment;
+import nimblix.in.HealthCareHub.response.AppointmentResponse;
 
 @RestController
 @RequestMapping("/api/patient")
 @RequiredArgsConstructor
 public class PatientController {
+
     private final AppointmentService appointmentService;
 
     @GetMapping("/appointments/{patientId}")
-    public ResponseEntity<?> getAppointmentHistory(@PathVariable Long patientId) {
-        return ResponseEntity.ok(appointmentService.getPatientAppointmentHistory(patientId));
+    public ResponseEntity<AppointmentResponse<List<Appointment>>> getAppointmentHistory(
+            @PathVariable Long patientId) {
+
+        List<Appointment> appointmentList =
+                appointmentService.getPatientAppointmentHistory(patientId);
+
+        if (appointmentList == null || appointmentList.isEmpty()) {
+            return ResponseEntity.status(204)
+                    .body(AppointmentResponse.empty());
+        }
+
+        return ResponseEntity.ok(AppointmentResponse.success(appointmentList));
     }
 }
-
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequestMapping("api/patient")
-@RequiredArgsConstructor
-public class PatientController {
-}
- main
